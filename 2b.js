@@ -1,0 +1,542 @@
+const { Bot, Message } = require('mirai-js');
+const bot = new Bot();
+// 脏话
+const DwordArr = ['铸币','猪鼻','啥b']
+// good morning
+const MwordArr = ['早','我起床了','哦哈呦','早上好']
+// good night
+const NwordArr = ['睡了','我睡了','睡觉了', '我睡觉了', '晚安', '睡觉']
+// loginWord
+const LwordArr = ['上号了','上了','我上了', '我上号了']
+// 随机中枪数
+let shootNum = Math.floor(Math.random()*6 + 1)
+let isInshotting = false
+let shotCount = 1
+let PshootNum = Math.floor(Math.random()*6 + 1)
+let PisInshotting = false
+let PshotCount = 1
+let FshootNum = Math.floor(Math.random()*6 + 1)
+let FisInshotting = false
+let FshotCount = 1
+// 
+const init = async function() {
+	// 连接到一个 mirai-api-http 服务
+	console.log('尝试连接bot')
+	await bot.open({
+		baseUrl: 'http://101.35.107.18:9090',
+		authKey: 'WWWWQQQQ',
+		// 要绑定的 qq，须确保该用户已在 mirai-console 登录
+		qq: 2817323351,
+	});
+	console.log('链接成功')
+	console.log('发送成功消息')
+	await bot.sendMessage({
+		// 群号
+		group: '977380104',
+		// 是 http server 接口所需的原始格式，若提供则优先使用
+		message: [
+		 { type: 'Plain', text: 'init success'}
+	 ],
+	});
+	// 监听群消息的事件
+	bot.on('GroupMessage', async data => {
+		// 通用属性定义
+		// 随机概率
+		const randomNum = Math.random()*100
+		console.log('随机数',randomNum)
+		console.log(data.messageChain)
+		const groupId = data.sender.group.id // 群号
+		const userId = data.sender.id // 用户id
+		const textObj = data.messageChain.find( 
+			item => item.type === 'Plain'
+		) // 消息对象
+		const atObj = data.messageChain.find( 
+			item => item.type === 'At'
+		) // At对象
+		const text = textObj && textObj.text // 消息
+		const at = atObj && atObj.target // @对象
+		// 通用消息回复
+		// 概率发图回复
+		if(randomNum <= 1) {
+			console.log('触发随机')
+			const filename = 'img/tjj.jpg'
+			console.log('获取图片数据')
+			let { url } = await bot.uploadImage({ filename });
+			console.log('获取成功，发图',url)
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addImageUrl(url),
+			});
+		}
+		// 脏话回复
+		if(DwordArr.includes(text)) {
+			await bot.sendMessage({
+				group: groupId,
+			  message: new Message().addText(text),
+			});
+		}
+		// 早上回复
+		if(MwordArr.includes(text)) {
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addText(
+					userId === 2260904215 ? '2b早上好'
+					: userId === 3451723268 ? '富婆早上好'
+					: '早上好'
+					)
+			})
+		}
+		// ^^回复
+		// rm
+		if(text === 'rm') {
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addText('riven.market')
+			})
+		}
+		// fpee
+		if(at === 3451723268) {
+			const filename = 'img/fpee.jpg'
+				console.log('获取图片数据')
+				let { url } = await bot.uploadImage({ filename });
+				console.log('获取成功，发图',url)
+				await bot.sendMessage({
+    			group: groupId,
+    			message: new Message().addImageUrl(url),
+				});
+		}
+		if(at === 708827207) {
+			const filename = 'img/pfans.jpg'
+				console.log('获取图片数据')
+				let { url } = await bot.uploadImage({ filename });
+				console.log('获取成功，发图',url)
+				await bot.sendMessage({
+    			group: groupId,
+    			message: new Message().addImageUrl(url),
+				});
+		}
+		if(text === '^^') {
+			const filename = 'img/haha.jpg'
+			console.log('获取图片数据')
+			let { url } = await bot.uploadImage({ filename });
+			console.log('获取成功，发图',url)
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addImageUrl(url),
+			});
+		}
+		// 睡觉回复
+		if(NwordArr.includes(text)) {
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addText(
+					userId === 2260904215 ? '2b晚安'
+					: userId === 3451723268 ? '富婆晚安'
+					: userId === 1657888533 ? '茉莉你睡鸡掰'
+					: userId === 937774921 ? 'sark你睡鸡掰'
+					: '晚安')
+			})
+		}
+		// @qq 铸币回复
+		if(at && (text.indexOf('铸币') !== -1 || text.indexOf('猪鼻') !== -1 )) {
+			if(at === 3451723268) {
+				const filename = 'img/bu.jpg'
+				console.log('获取图片数据')
+				let { url } = await bot.uploadImage({ filename });
+				console.log('获取成功，发图',url)
+				await bot.sendMessage({
+    			group: groupId,
+    			message: new Message().addImageUrl(url),
+				});
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addText('怎么可以骂富婆呢')
+				})
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addAt(data.sender.id).addText(text.indexOf('铸币') !== -1 ? ' 铸币' : ' 猪鼻')
+				})
+				return
+			}
+			if(at === 2817323351) {
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addText('你骂我干嘛')
+				})
+				const filename = 'img/ma.gif'
+				console.log('获取图片数据')
+				let { url } = await bot.uploadImage({ filename });
+				console.log('获取成功，发图',url)
+				await bot.sendMessage({
+    			group: groupId,
+    			message: new Message().addImageUrl(url),
+				});
+				return
+			}
+			await bot.sendMessage({
+				group: groupId,
+				messageChain: new Message().addAt(atObj.target).addText(text.indexOf('铸币') !== -1 ? ' 铸币' : ' 猪鼻')
+			})
+		}
+	// 	[
+  // { type: 'Source', id: 333, time: 1632371470 },
+  // { type: 'At', target: 2817323351, display: '' },
+  // { type: 'Plain', text: ' 铸币' }
+	// 	]
+	if(data.messageChain)
+		// 上号回复
+		if(LwordArr.includes(text)) {
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addText(userId === 2260904215 ? '你终于能上号了' : userId === 3451723268 ? '富婆上号了' : '好了你可以下了')
+			})
+		}
+		if(text === '铸币2b' && userId === 2260904215) {
+			await bot.sendMessage({
+				group: groupId,
+			  messageChain: new Message().addText('？让我自己骂自己 猪鼻吧').getMessageChain()
+			});
+		}
+		if(text === '铸币2b' && userId !== 2260904215) {
+			await bot.sendMessage({
+				group: groupId,
+			  messageChain: new Message().addText('你才铸币').getMessageChain()
+			});
+		}
+		// flash专用
+		if(groupId === 552595584) {
+			if(text === '铸币茉莉' && (userId === 2260904215 || userId === 937774921)) {
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addAt(1657888533).addText('  铸币').getMessageChain()
+				});
+			}
+			if(text === '铸币sark' && (userId === 2260904215 || userId === 1657888533)) {
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addAt(937774921).addText('  铸币').getMessageChain()
+				});
+			}
+			if(text === '/俄罗斯转盘') {
+				if(FisInshotting) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('游戏已开始，请等待游戏结束')
+					})
+				}
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('俄罗斯转盘模式已经开启，左轮里只有一颗子弹，输入 射我 来抽奖')
+				})
+				FisInshotting = true
+			}
+			if(text === '射我' && FisInshotting) {
+				console.log(FshootNum)
+				console.log(FshotCount)
+				if(FshotCount === FshootNum) {
+					FisInshotting = false
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText(userId === 3451723268 ? '  这发有子弹 你本来要寄了' : '砰！ 这发有子弹 你寄了')
+					})
+					if(userId === 3451723268) {
+						await bot.sendMessage({
+							group: groupId,
+							message: new Message().addText('但是2b跟我说不能让你寄')
+						})
+					}
+					if(userId === 1657888533 || userId === 937774921) {
+						await bot.sendMessage({
+							group: groupId,
+							message: new Message().addText(userId === 1657888533 ?'是茉莉寄了啊 哈哈哈哈哈哈哈哈哈哈哈哈哈' : '是sark寄了啊 哈哈哈哈哈哈哈哈哈哈哈哈哈')
+						})
+						const filename = 'img/wuguihaha.jpg'
+						console.log('获取图片数据')
+						let { url } = await bot.uploadImage({ filename });
+						console.log('获取成功，发图',url)
+						await bot.sendMessage({
+							group: groupId,
+							message: new Message().addImageUrl(url),
+						});	
+					}
+					FshotCount = 1
+					FshootNum = Math.floor(Math.random()*6 + 1)
+					if(data.sender.permission === 'MEMBER') {
+						await bot.mute({
+							group:groupId,
+							qq:userId,
+							time:60
+						})
+					} else {
+						await bot.sendMessage({
+							group: groupId,
+							message: new Message().addText(userId === 3451723268 ? '' : '狗管理我封不了啊啊啊啊啊啊啊啊啊啊啊')
+						})
+						const filename = 'img/ke.jpg'
+							console.log('获取图片数据')
+							let { url } = await bot.uploadImage({ filename });
+							console.log('获取成功，发图',url)
+							await bot.sendMessage({
+								group: groupId,
+								message: new Message().addImageUrl(url),
+							});
+					}
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText(userId === 3451723268 ? ' 那么游戏结束，我不能射富婆' : '  游戏结束,愿天堂也有wf  ').addAt(userId)
+					})
+				} else if (FshotCount !== FshootNum) {
+					if(FshotCount > 6 ) {
+						await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(2260904215).addText('  sb你程序出bug了,我重启了  ')
+					})
+					FshotCount = 1
+					FshootNum = Math.floor(Math.random()*6 + 1)
+					FisInshotting = false
+					return
+					}
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText('  咔！ 这发没子弹 你活着')
+					})
+					console.log(FshootNum)
+					console.log(FshotCount)
+					FshotCount++
+				} else {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(data.sender.id).addText('如果你看见了这个话说明这个啥b程序有bug').addAt(2260904215)
+					})
+				}
+			}
+		}
+		// p佬群专用
+		if(groupId === 288500440) {
+			if(text === '/俄罗斯转盘') {
+				if(PisInshotting) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('游戏已开始，请等待游戏结束')
+					})
+				}
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('俄罗斯转盘模式已经开启，左轮里只有一颗子弹，输入 射我 来抽奖')
+				})
+				PisInshotting = true
+			}
+			if(text === '射我' && PisInshotting) {
+				console.log(PshootNum)
+				console.log(PshotCount)
+				if(PshotCount === PshootNum) {
+					PisInshotting = false
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText('  砰！ 这发有子弹 你寄了')
+					})
+					if(data.sender.permission === 'MEMBER') {
+						await bot.mute({
+							group:groupId,
+							qq:userId,
+							time:60
+						})
+					} else {
+						await bot.sendMessage({
+							group: groupId,
+							message: new Message().addText('狗管理我封不了啊啊啊啊啊啊啊啊啊啊')
+						})
+						const filename = 'img/ke.jpg'
+						console.log('获取图片数据')
+						let { url } = await bot.uploadImage({ filename });
+						console.log('获取成功，发图',url)
+						await bot.sendMessage({
+							group: groupId,
+							message: new Message().addImageUrl(url),
+						});
+					}
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('  游戏结束,愿天堂也有wf  ').addAt(userId)
+					})
+					PshootNum = Math.floor(Math.random()*6 + 1)
+					PshotCount = 1
+					return
+				} else if (PshotCount !== PshootNum) {
+					if(PshotCount > 6 ) {
+						await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(2260904215).addText('  sb你程序出bug了,我重启了  ')
+					})
+					PshotCount = 1
+					PshootNum = Math.floor(Math.random()*6 + 1)
+					PisInshotting = false
+					return
+					}
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText(' 咔！ 这发没子弹 你活着')
+					})
+					console.log(PshootNum)
+					console.log(PshotCount)
+					PshotCount++
+					return
+				} else {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(data.sender.id).addText('如果你看见了这个话说明这个啥b程序有bug').addAt(2260904215)
+					})
+				}
+			}
+			// 暂时空着
+		}
+		// fa群专用
+		if(groupId === 827907201) {
+			// specialshine回复
+			if(text === '@YoRHaNo2TypeB. 老婆(๑>؂<๑）' && (userId === 1746162928 || userId === 2260904215))  {
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addText('我不是你老婆').getMessageChain()
+				});
+				const filename = 'img/ke.jpg'
+				console.log('获取图片数据')
+				let { url } = await bot.uploadImage({ filename });
+				console.log('获取成功，发图',url)
+				await bot.sendMessage({
+    			group: groupId,
+    			message: new Message().addImageUrl(url),
+				});
+			}
+			if(text === '/俄罗斯转盘') {
+				if(isInshotting) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('游戏已开始，请等待游戏结束')
+					})
+				}
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('俄罗斯转盘模式已经开启，左轮里只有一颗子弹，输入 射我 来抽奖')
+				})
+				isInshotting = true
+			}
+			if(text === '射我' && isInshotting) {
+				if(shotCount === shootNum) {
+					isInshotting = false
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText('  砰！ 这发有子弹 你寄了')
+					})
+					if(data.sender.permission === 'MEMBER') {
+						await bot.mute({
+							group:groupId,
+							qq:userId,
+							time:60
+						})
+					} else {
+						await bot.sendMessage({
+							group: groupId,
+							message: new Message().addText('  狗管理我封不了啊啊啊啊啊啊啊啊  ')
+						})
+						const filename = 'img/ke.jpg'
+							console.log('获取图片数据')
+							let { url } = await bot.uploadImage({ filename });
+							console.log('获取成功，发图',url)
+							await bot.sendMessage({
+								group: groupId,
+								message: new Message().addImageUrl(url),
+							});
+					}
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText(' 游戏结束,愿天堂也有wf ').addAt(userId)
+					})
+					shotCount = 1
+					shootNum = Math.floor(Math.random()*6 + 1)
+				} else if (shotCount !== shootNum) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText('  咔！ 这发没子弹 你活着')
+					})
+					if(shotCount > 6 ) {
+						await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(2260904215).addText('  sb你程序出bug了,我重启了  ')
+					})
+					shotCount = 1
+					shootNum = Math.floor(Math.random()*6 + 1)
+					isInshotting = false
+					return
+					}
+					console.log(shootNum)
+					console.log(shotCount)
+					shotCount++
+				} else {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(data.sender.id).addText('如果你看见了这个话说明这个啥b程序有bug').addAt(2260904215)
+					})
+				}
+			}
+		}
+		// 测试群用
+		if(groupId === 977380104) {
+			if(text === '/俄罗斯转盘') {
+				if(isInshotting) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('游戏已开始，请等待游戏结束')
+					})
+				}
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('俄罗斯转盘模式已经开启，左轮里只有一颗子弹，输入 射我 来抽奖')
+				})
+				isInshotting = true
+			}
+			if(text === '射我' && isInshotting) {
+				if(shotCount === shootNum) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText('  砰！ 这发有子弹 你寄了')
+					})
+					await bot.mute({
+						group:groupId,
+						qq:userId,
+						time:60
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('  游戏结束,愿天堂也有wf  ').addAt(userId)
+					})
+					await bot.unmute({
+						group: groupId,
+						qq: userId
+					})
+					shotCount = 1
+					shootNum = Math.floor(Math.random()*6 + 1)
+					isInshotting = false
+					console.log(shootNum)
+					console.log(shotCount)
+					return
+				} else if (shotCount !== shootNum) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(userId).addText('  砰！ 这发没子弹 你活着  ')
+					})
+					console.log(shootNum)
+					console.log(shotCount)
+					shotCount++
+					return
+				} else {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addAt(data.sender.id).addText('如果你看见了这个话说明这个啥b程序有bug').addAt(2260904215)
+					})
+				}
+			}
+		}
+	});
+}
+
+init()
