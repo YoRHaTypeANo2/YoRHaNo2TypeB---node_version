@@ -131,7 +131,7 @@ const init = async function() {
 						group: groupId,
 						message: new Message().addText('加载Warframe数据...')
 					})
-				},1500)
+				},2000)
 				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
@@ -145,7 +145,7 @@ const init = async function() {
 						group: groupId,
 						message: new Message().addText('黑匣子内部压强，正常')
 					})
-				},2000)
+				},3000)
 				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
@@ -171,7 +171,7 @@ const init = async function() {
 						group: groupId,
 						message: new Message().addText('激活环境传感器')
 					})
-				},3000)
+				},4000)
 				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
@@ -181,7 +181,7 @@ const init = async function() {
 						group: groupId,
 						message: new Message().addText('装备状态： 正常')
 					})
-				}, 4000)
+				}, 5000)
 				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
@@ -192,7 +192,7 @@ const init = async function() {
 						message: new Message().addText('寄叶B型2号机战斗准备完成，维修结束')
 					})
 					isLoading = false
-				}, 5000)
+				}, 6000)
 			} else {
 				await bot.sendMessage({
 					group: groupId,
