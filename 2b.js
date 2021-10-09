@@ -18,6 +18,9 @@ let PshotCount = 1
 let FshootNum = Math.floor(Math.random()*6 + 1)
 let FisInshotting = false
 let FshotCount = 1
+let isLoading = false
+let fixTime = ''
+let fixMan = ''
 // 
 const init = async function() {
 	// 连接到一个 mirai-api-http 服务
@@ -40,6 +43,7 @@ const init = async function() {
 	});
 	// 监听群消息的事件
 	bot.on('GroupMessage', async data => {
+		if(isLoading) return
 		// 通用属性定义
 		// 随机概率
 		const randomNum = Math.random()*100
@@ -86,7 +90,116 @@ const init = async function() {
 					)
 			})
 		}
-		// ^^回复
+		// restart
+		if(text === '2b自我维修') {
+			if(userId === 2260904215 || userId === 3451723268) {
+				isLoading = true
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('开始系统检查...')
+				})
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText(`上次维修时间：${fixTime || '无'}`)
+				})
+				fixTime = new Date().toLocaleString()
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText(`上次启用维修的人：${fixMan || '无'}`)
+				})
+				fixMan = userId
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('除Warframe功能以外其他功能暂停使用')
+				})
+				setTimeout(() => {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('记忆单元：正常')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('系统核心：正常')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('初始化策略日志')
+					})
+				},1000)
+				setTimeout(() => {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('加载Warframe数据...')
+					})
+				},1500)
+				setTimeout(() => {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('剩余电量： 100%')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('黑匣子温度：正常')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('黑匣子内部压强，正常')
+					})
+				},2000)
+				setTimeout(() => {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('激活IFF')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('激活FCS')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('激活辅助器连接')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('激活惯性控制系统')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('启动DBU设置')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('激活环境传感器')
+					})
+				},3000)
+				setTimeout(() => {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('装备验证： 完成')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('装备状态： 正常')
+					})
+				}, 4000)
+				setTimeout(() => {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('所有系统正常')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('寄叶B型2号机战斗准备完成，维修结束')
+					})
+					isLoading = false
+				}, 5000)
+			} else {
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('你没有操作权限哦')
+				})
+			}
+		}
 		// rm
 		if(text === 'rm') {
 			await bot.sendMessage({
@@ -115,6 +228,7 @@ const init = async function() {
     			message: new Message().addImageUrl(url),
 				});
 		}
+		// ^^回复
 		if(text === '^^') {
 			const filename = 'img/haha.jpg'
 			console.log('获取图片数据')
