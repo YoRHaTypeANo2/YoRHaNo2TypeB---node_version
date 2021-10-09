@@ -90,6 +90,26 @@ const init = async function() {
 					)
 			})
 		}
+		// 计算回复
+		if(text.indexOf('计算 ') === 0) {
+			let str = text.replace('计算 ','')
+			try {
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText(`计算结果： ${eval(str)}`)
+				})
+			}
+			catch(e) {
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('淦我报错了，你在算些什么鸡掰')
+				})
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText(e)
+				})
+			}
+		}
 		// restart
 		if(text === '2b自我维修') {
 			if(userId === 2260904215 || userId === 3451723268) {
