@@ -112,7 +112,7 @@ const init = async function() {
 					group: groupId,
 					message: new Message().addText('除Warframe功能以外其他功能暂停使用')
 				})
-				setTimeout(() => {
+				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
 						message: new Message().addText('记忆单元：正常')
@@ -126,13 +126,13 @@ const init = async function() {
 						message: new Message().addText('初始化策略日志')
 					})
 				},1000)
-				setTimeout(() => {
+				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
 						message: new Message().addText('加载Warframe数据...')
 					})
 				},1500)
-				setTimeout(() => {
+				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
 						message: new Message().addText('剩余电量： 100%')
@@ -146,7 +146,7 @@ const init = async function() {
 						message: new Message().addText('黑匣子内部压强，正常')
 					})
 				},2000)
-				setTimeout(() => {
+				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
 						message: new Message().addText('激活IFF')
@@ -172,7 +172,7 @@ const init = async function() {
 						message: new Message().addText('激活环境传感器')
 					})
 				},3000)
-				setTimeout(() => {
+				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
 						message: new Message().addText('装备验证： 完成')
@@ -182,7 +182,7 @@ const init = async function() {
 						message: new Message().addText('装备状态： 正常')
 					})
 				}, 4000)
-				setTimeout(() => {
+				setTimeout( async () => {
 					await bot.sendMessage({
 						group: groupId,
 						message: new Message().addText('所有系统正常')
