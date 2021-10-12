@@ -1,6 +1,8 @@
 const { Bot, Message } = require('mirai-js');
 // 机器人实例
 const bot = new Bot();
+// code
+let code = '';
 // 解析code函数
 const Fun = new Function(code);
 // 脏话
@@ -96,7 +98,7 @@ const init = async function() {
 		// code
 		if(text.indexOf('code ') === 0) {
 			if(userId === 2260904215 || userId === 1667270240) {
-				let code  = text.replace('code ', '')
+				code  = text.replace('code ', '')
 				try {
 					// 
 					const res = Fun(code);
