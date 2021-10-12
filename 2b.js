@@ -1,5 +1,8 @@
 const { Bot, Message } = require('mirai-js');
+// 机器人实例
 const bot = new Bot();
+// 解析code函数
+const Fun = new Function(code);
 // 脏话
 const DwordArr = ['铸币','猪鼻','啥b']
 // good morning
@@ -90,6 +93,32 @@ const init = async function() {
 					)
 			})
 		}
+		// code
+		if(text.indexOf('code ') === 0) {
+			if(userId === 2260904215 || userId === 1667270240) {
+				let code  = text.replace('code ', '')
+				try {
+					// 
+					const res = Fun(code);
+					if(res)
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText(res)
+					})
+				}
+				catch(e) {
+					await bot.sendMessage({
+						group: groupId,
+						message: new Message().addText('你在写些什么鸡掰代码，出错了')
+					})
+				}
+			} else {
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText(`你还莫得权限哦`)
+				})
+			}
+		}
 		// 计算回复
 		if(text.indexOf('计算 ') === 0) {
 			let str = text.replace('计算 ','')
@@ -103,10 +132,6 @@ const init = async function() {
 				await bot.sendMessage({
 					group: groupId,
 					message: new Message().addText('淦我报错了，你在算些什么鸡掰')
-				})
-				await bot.sendMessage({
-					group: groupId,
-					message: new Message().addText(e)
 				})
 			}
 		}
