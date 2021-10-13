@@ -97,11 +97,15 @@ const init = async function() {
 		}
 		// code
 		if(text.indexOf('code ') === 0) {
-			if(userId === 2260904215 || userId === 1667270240) {
-				code  = text.replace('code ', '')
+			console.log('???')
+			if(userId === 2260904215 || userId === 1667270240 || userId === 849943464 || userId === 1315430008) {
+				code  = `${text.replace('code ', '')}`
+				console.log(code)
 				try {
 					// 
-					const res = Fun(code);
+					let fun = new Function(code);
+					let res = fun(code);
+					console.log(res)
 					if(res)
 					await bot.sendMessage({
 						group: groupId,
