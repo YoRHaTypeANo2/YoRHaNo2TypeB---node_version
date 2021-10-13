@@ -142,6 +142,19 @@ const init = async function() {
 			}
 		}
 		// restart
+		if(text === '距离zrq生日还有多久') {
+			let word = ''
+			const days = Math.ceil((new Date('2022/09/11 00:00:00').getTime() - new Date().getTime()) / 86400 / 1000)
+			if( days <= 0) {
+				word = '今天就是zrq生日哈哈哈，生日快乐'
+			} else {
+				word = `距离zrq的生日还有${days}天`
+			}
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addText(word)
+			})
+		}
 		if(text === '2b自我维修') {
 			if(userId === 2260904215 || userId === 3451723268) {
 				isLoading = true
