@@ -155,6 +155,19 @@ const init = async function() {
 				message: new Message().addText(word)
 			})
 		}
+		if(text === '距离2b生日还有多久') {
+			let word = ''
+			const days = Math.ceil((new Date('2022/02/14 00:00:00').getTime() - new Date().getTime()) / 86400 / 1000)
+			if( days <= 0) {
+				word = '今天就是2b生日哈哈哈'
+			} else {
+				word = `距离2b的生日还有${days}天`
+			}
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addText(word)
+			})
+		}
 		if(text === '2b自我维修') {
 			if(userId === 2260904215 || userId === 3451723268) {
 				isLoading = true
