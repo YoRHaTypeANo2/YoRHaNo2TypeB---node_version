@@ -396,16 +396,16 @@ const init = async function() {
 		}
 		// flash专用
 		if(groupId === 552595584) {
-			if(text === '铸币茉莉' && (userId === 2260904215 || userId === 937774921)) {
+			if(text.indexOf('茉莉') !== -1 && (text.indexOf('铸币') !== -1 || text.indexOf('猪逼') !== -1 || text.indexOf('猪鼻') !== -1) && (userId === 2260904215 || userId === 937774921)) {
 				await bot.sendMessage({
 					group: groupId,
-					messageChain: new Message().addAt(1657888533).addText('  铸币').getMessageChain()
+					messageChain: new Message().addAt(1657888533).addText(`${text.indexOf('猪鼻') !== -1 ? ' 猪鼻 ' :text.indexOf('猪逼') !== -1 ? ' 猪逼 ' : ' 铸币 '}`).getMessageChain()
 				});
 			}
-			if(text === '铸币sark' && (userId === 2260904215 || userId === 1657888533)) {
+			if(text.indexOf('sark') !== -1 && (text.indexOf('铸币') !== -1 || text.indexOf('猪逼') !== -1 || text.indexOf('猪鼻') !== -1) && (userId === 2260904215 || userId === 1657888533)) {
 				await bot.sendMessage({
 					group: groupId,
-					messageChain: new Message().addAt(937774921).addText('  铸币').getMessageChain()
+					messageChain: new Message().addAt(937774921).addText(`${text.indexOf('猪鼻') !== -1 ? ' 猪鼻 ' :text.indexOf('猪逼') !== -1 ? ' 猪逼 ' : ' 铸币 '}`).getMessageChain()
 				});
 			}
 			if(text === '/俄罗斯转盘') {
