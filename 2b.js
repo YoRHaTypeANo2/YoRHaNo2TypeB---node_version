@@ -318,8 +318,10 @@ const init = async function() {
 		}
 		// 透一下
 		if (at === 2817323351 && text === '给我透一下') {
+			console.log('获取图片数据')
 			const filename = 'img/bbzl.jpg'
 			let { url } = await bot.uploadImage({ filename });
+			console.log('获取成功，发图',url)
 			await bot.sendMessage({
 				group: groupId,
 				message: new Message().addImageUrl(url),
