@@ -316,6 +316,15 @@ const init = async function() {
 				message: new Message().addImageUrl(url),
 			});
 		}
+		// 透一下
+		if (at === 2817323351 && text === '给我透一下') {
+			const filename = 'img/bbzl.jpg'
+			let { url } = await bot.uploadImage({ filename });
+			await bot.sendMessage({
+				group: groupId,
+				message: new Message().addImageUrl(url),
+			});
+		}
 		// 睡觉回复
 		if(NwordArr.includes(text)) {
 			await bot.sendMessage({
