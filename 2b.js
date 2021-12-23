@@ -64,6 +64,7 @@ const init = async function() {
 		) // At对象
 		const text = textObj && textObj.text // 消息
 		const at = atObj && atObj.target // @对象
+		console.log('at: ',at, 'text: ',text)
 		// 通用消息回复
 		// 概率发图回复
 		if(randomNum <= 1) {
@@ -317,7 +318,7 @@ const init = async function() {
 			});
 		}
 		// 透一下
-		if (at === 2817323351 && text === '给我透一下') {
+		if (text.indexOf('给我透一下') > -1 && at === 2817323351) {
 			console.log('获取图片数据')
 			const filename = 'img/bbzl.jpg'
 			let { url } = await bot.uploadImage({ filename });
@@ -385,7 +386,7 @@ const init = async function() {
   // { type: 'At', target: 2817323351, display: '' },
   // { type: 'Plain', text: ' 铸币' }
 	// 	]
-	if(data.messageChain)
+	// if(data.messageChain)
 		// 上号回复
 		if(LwordArr.includes(text)) {
 			await bot.sendMessage({
@@ -595,12 +596,27 @@ const init = async function() {
 		// fa群专用
 		if(groupId === 827907201) {
 			// specialshine回复
-			if(text === '@YoRHaNo2TypeB. 老婆(๑>؂<๑）' && (userId === 1746162928 || userId === 2260904215))  {
+			if((text === '@YoRHaNo2TypeB. 老婆(๑>؂<๑）') && (userId === 1746162928 || userId === 2260904215))  {
 				await bot.sendMessage({
 					group: groupId,
 					messageChain: new Message().addText('我不是你老婆').getMessageChain()
 				});
 				const filename = 'img/ke.jpg'
+				console.log('获取图片数据')
+				let { url } = await bot.uploadImage({ filename });
+				console.log('获取成功，发图',url)
+				await bot.sendMessage({
+    			group: groupId,
+    			message: new Message().addImageUrl(url),
+				});
+			}
+			// vv
+			if(text === 'vv') {
+				await bot.sendMessage({
+					group: groupId,
+					message: new Message().addText('想让我叫vv帅哥？')
+				})
+				const filename = 'img/bu.jpg'
 				console.log('获取图片数据')
 				let { url } = await bot.uploadImage({ filename });
 				console.log('获取成功，发图',url)
