@@ -342,6 +342,7 @@ const init = async function() {
 		}
 		// @qq 铸币回复
 		if(at && (text.indexOf('铸币') !== -1 || text.indexOf('猪鼻') !== -1 )) {
+			//  骂shy
 			if(at === 3451723268) {
 				const filename = 'img/bu.jpg'
 				console.log('获取图片数据')
@@ -361,7 +362,8 @@ const init = async function() {
 				})
 				return
 			}
-			if(at === 2817323351) {
+			// 骂机器人
+			else if(at === 2817323351) {
 				await bot.sendMessage({
 					group: groupId,
 					messageChain: new Message().addText('你骂我干嘛')
@@ -376,10 +378,24 @@ const init = async function() {
 				});
 				return
 			}
-			await bot.sendMessage({
-				group: groupId,
-				messageChain: new Message().addAt(atObj.target).addText(text.indexOf('铸币') !== -1 ? ' 铸币' : ' 猪鼻')
-			})
+			// 骂幽儿希卡
+			else if (at === 1711803672) {
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addText('不可以骂幽儿希卡')
+				})
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addAt(data.sender.id).addText(text.indexOf('铸币') !== -1 ? ' 你才是铸币' : ' 你才是猪鼻')
+				})
+				return
+			}
+			else {
+				await bot.sendMessage({
+					group: groupId,
+					messageChain: new Message().addAt(atObj.target).addText(text.indexOf('铸币') !== -1 ? ' 铸币' : ' 猪鼻')
+				})
+			}
 		}
 	// 	[
   // { type: 'Source', id: 333, time: 1632371470 },
