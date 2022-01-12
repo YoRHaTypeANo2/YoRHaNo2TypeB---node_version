@@ -31,7 +31,7 @@ const init = async function() {
 	// 连接到一个 mirai-api-http 服务
 	console.log('尝试连接bot')
 	await bot.open({
-		baseUrl: 'http://101.35.107.18:9090',
+		baseUrl: 'http://124.223.52.15:9090',
 		authKey: 'WWWWQQQQ',
 		// 要绑定的 qq，须确保该用户已在 mirai-console 登录
 		qq: 2817323351,
