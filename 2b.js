@@ -97,7 +97,7 @@ const init = async function() {
 			})
 		}
 		// code
-		if(text.indexOf('code ') === 0) {
+		if(text && text.indexOf('code ') === 0) {
 			console.log('???')
 			if(userId === 2260904215 || userId === 1667270240 || userId === 849943464 || userId === 1315430008) {
 				code  = `${text.replace('code ', '')}`
@@ -127,7 +127,7 @@ const init = async function() {
 			}
 		}
 		// 计算回复
-		if(text.indexOf('计算 ') === 0) {
+		if(text && text.indexOf('计算 ') === 0) {
 			let str = text.replace('计算 ','')
 			try {
 				await bot.sendMessage({
@@ -318,7 +318,7 @@ const init = async function() {
 			});
 		}
 		// 透一下
-		if (text.indexOf('给我透一下') > -1 && at === 2817323351) {
+		if (text && text.indexOf('给我透一下') > -1 && at === 2817323351) {
 			console.log('获取图片数据')
 			const filename = 'img/bbzl.jpg'
 			let { url } = await bot.uploadImage({ filename });
@@ -341,7 +341,7 @@ const init = async function() {
 			})
 		}
 		// @qq 铸币回复
-		if(at && (text.indexOf('铸币') !== -1 || text.indexOf('猪鼻') !== -1 )) {
+		if(at && (text && text.indexOf('铸币') !== -1 || text.indexOf('猪鼻') !== -1 )) {
 			//  骂shy
 			if(at === 3451723268) {
 				const filename = 'img/bu.jpg'
@@ -424,13 +424,13 @@ const init = async function() {
 		}
 		// flash专用
 		if(groupId === 552595584) {
-			if(text.indexOf('茉莉') !== -1 && (text.indexOf('铸币') !== -1 || text.indexOf('猪逼') !== -1 || text.indexOf('猪鼻') !== -1) && (userId === 2260904215 || userId === 937774921)) {
+			if(text && text.indexOf('茉莉') !== -1 && (text.indexOf('铸币') !== -1 || text.indexOf('猪逼') !== -1 || text.indexOf('猪鼻') !== -1) && (userId === 2260904215 || userId === 937774921)) {
 				await bot.sendMessage({
 					group: groupId,
 					messageChain: new Message().addAt(1657888533).addText(`${text.indexOf('猪鼻') !== -1 ? ' 猪鼻 ' :text.indexOf('猪逼') !== -1 ? ' 猪逼 ' : ' 铸币 '}`).getMessageChain()
 				});
 			}
-			if(text.indexOf('sark') !== -1 && (text.indexOf('铸币') !== -1 || text.indexOf('猪逼') !== -1 || text.indexOf('猪鼻') !== -1) && (userId === 2260904215 || userId === 1657888533)) {
+			if(text && text.indexOf('sark') !== -1 && (text.indexOf('铸币') !== -1 || text.indexOf('猪逼') !== -1 || text.indexOf('猪鼻') !== -1) && (userId === 2260904215 || userId === 1657888533)) {
 				await bot.sendMessage({
 					group: groupId,
 					messageChain: new Message().addAt(937774921).addText(`${text.indexOf('猪鼻') !== -1 ? ' 猪鼻 ' :text.indexOf('猪逼') !== -1 ? ' 猪逼 ' : ' 铸币 '}`).getMessageChain()
