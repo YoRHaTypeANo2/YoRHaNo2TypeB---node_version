@@ -391,6 +391,17 @@ const init = async function() {
 					})
 					return
 				}
+				else if (at === 1239257622) {
+					await bot.sendMessage({
+						group: groupId,
+						messageChain: new Message().addText('怎么可以骂bili')
+					})
+					await bot.sendMessage({
+						group: groupId,
+						messageChain: new Message().addAt(data.sender.id).addText(text.indexOf('铸币') !== -1 ? ' 你才是铸币' : ' 你才是猪鼻')
+					})
+					return
+				}
 				else {
 					await bot.sendMessage({
 						group: groupId,
@@ -628,20 +639,20 @@ const init = async function() {
 					});
 				}
 				// vv
-				if(text === 'vv') {
-					await bot.sendMessage({
-						group: groupId,
-						message: new Message().addText('想让我叫vv帅哥？')
-					})
-					const filename = 'img/bu.jpg'
-					console.log('获取图片数据')
-					let { url } = await bot.uploadImage({ filename });
-					console.log('获取成功，发图',url)
-					await bot.sendMessage({
-						group: groupId,
-						message: new Message().addImageUrl(url),
-					});
-				}
+				// if(text === 'vv') {
+				// 	await bot.sendMessage({
+				// 		group: groupId,
+				// 		message: new Message().addText('想让我叫vv帅哥？')
+				// 	})
+				// 	const filename = 'img/bu.jpg'
+				// 	console.log('获取图片数据')
+				// 	let { url } = await bot.uploadImage({ filename });
+				// 	console.log('获取成功，发图',url)
+				// 	await bot.sendMessage({
+				// 		group: groupId,
+				// 		message: new Message().addImageUrl(url),
+				// 	});
+				// }
 				if(text === '/俄罗斯转盘') {
 					if(isInshotting) {
 						await bot.sendMessage({
